@@ -78,31 +78,28 @@
         </div>
       </div>
     </nav>
-
+    {% if car is not none %}
     <div class="container">
       <div class="row">
-        {% for car in car_list %}
-        <a href="/single_car/{{ car.id }}">
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading">{{ car.number }}</div>
-              <div class="panel-body">
-                <img
-                  src="{{ car.image }}"
-                  class="img-responsive"
-                  width="80px"
-                  height="150px"
-                  style="width: 100%"
-                  alt="Image"
-                />
-              </div>
-              <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="col-sm-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">{{ car.number }}</div>
+            <div class="panel-body">
+              <img
+                src="{{ car.image }}"
+                class="img-responsive"
+                width="80px"
+                height="150px"
+                style="width: 100%"
+                alt="Image"
+              />
             </div>
+            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
           </div>
-        </a>
-        {% endfor %}
+        </div>
       </div>
     </div>
+    {% endif %}
     <br />
 
     <br /><br />
