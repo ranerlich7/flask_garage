@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -39,7 +39,13 @@ def single_car(id):
 @app.route("/add_car/")
 def add_car():
     print("****** Adding car")
-    return "Adding car"
+    return render_template("add_car.html")
+
+
+@app.route("/add_to_list/", methods=["POST", "GET"])
+def add_to_list():
+    print("****** Adding to list", request.form["cNumber"])
+    return "Added to list:" + request.form["cNumber"]
 
 
 if __name__ == "__main__":
