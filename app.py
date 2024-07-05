@@ -6,26 +6,51 @@ car1 = {
     "id": "1",
     "number": "123-456",
     "problems": [],
+    "urgent": True,
     "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=600",
 }
 car2 = {
     "id": "2",
     "number": "456-789",
     "problems": [],
+    "urgent": True,
     "image": "https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=600",
 }
-cars = [car1, car2]
+car3 = {
+    "id": "3",
+    "number": "333-333",
+    "urgent": False,
+    "problems": [],
+    "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80",
+}
+car4 = {
+    "id": "4",
+    "number": "444-444",
+    "urgent": False,
+    "problems": [],
+    "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/156405/xuv-3xo-exterior-right-front-three-quarter-33.jpeg?isig=0&q=80",
+}
+cars = [car1, car2, car3, car4]
 
 
-@app.route("/")
+
+
+@app.route("/") # default request is always GET
 def cars_list():
-    return render_template("car_list.html", car_list=cars)
-
-    # final_str = ""
-    # for car in cars:
-    #     final_str += f"<p>{car['number']}</p>"
-
-    # return final_str
+    urgent = request.args.get('urgent')
+    print("***** urgent", urgent)
+    if urgent == 'true':
+        filtered_cars = [car for car in cars if car.get('urgent')]
+        # list comprehension is equivalent to the following code
+        # new_cars = []
+        # for car in cars:
+        #     if car.get('urgent'):
+        #         new_cars.append(car)
+        
+    else:
+        filtered_cars = cars  # Return all cars if no urgent is requested
+    
+    return render_template("car_list.html", car_list=filtered_cars)
 
 
 @app.route("/single_car/<id>")

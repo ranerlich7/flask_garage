@@ -31,12 +31,19 @@
         width: 100%; /* Fill entire width of panel body */
         height: auto; /* Maintain aspect ratio */
       }
+      .jumbotron-sm {
+        padding: 2rem 1rem; /* Example padding adjustment */
+      }
+
+      .jumbotron-sm h1 {
+        font-size: 2.5rem; /* Example font size adjustment */
+      }
     </style>
   </head>
   <body>
-    <div class="jumbotron">
+    <div class="jumbotron jumbotron-sm">
       <div class="container text-center">
-        <h1>My Garage</h1>
+        <h1 class="h2">My Garage</h1>
       </div>
     </div>
 
@@ -57,11 +64,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Deals</a></li>
-            <li><a href="#">Stores</a></li>
-            <li><a href="#">Contact</a></li>
+            <li class="active"><a href="/">All Cars</a></li>
+            <li><a href="/?urgent=true">Urgent Cars</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
@@ -82,27 +86,26 @@
     <div class="container">
       <div class="row">
         {% for car in car_list %}
-        <a href="/single_car/{{ car.id }}">
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading">{{ car.number }}</div>
-              <div class="panel-body">
-                <img
-                  src="{{ car.image }}"
-                  class="img-responsive"
-                  width="80px"
-                  height="150px"
-                  style="width: 100%"
-                  alt="Image"
-                />
-              </div>
-              <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="col-sm-4">
+          <div class="card">
+            <h2 class="card-title text-center mt-3 mb-0">{{ car.number }}</h2>
+            <a href="/single_car/{{ car.id }}">
+              <img
+                src="{{ car.image }}"
+                class="card-img-top"
+                alt="Car Image"
+                style="width: 100%; height: 150px; object-fit: cover"
+              />
+            </a>
+            <div class="card-body">
+              <p class="card-text">Buy 50 mobiles and get a gift card</p>
             </div>
           </div>
-        </a>
+        </div>
         {% endfor %}
       </div>
     </div>
+
     <br />
 
     <br /><br />
