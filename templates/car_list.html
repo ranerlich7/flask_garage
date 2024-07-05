@@ -68,6 +68,7 @@
             <li><a href="/?urgent=true">Urgent Cars</a></li>
             <li><a href="/?problem=engine">Engine issue</a></li>
             <li><a href="/?problem=gear">Gear issue</a></li>
+            <li><a href="/add_car">Add car</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
@@ -84,7 +85,19 @@
         </div>
       </div>
     </nav>
-
+    <h2>Search for Cars by Problem</h2>
+    <form action="/" method="GET">
+      <label for="problem">Enter a problem:</label><br />
+      <input
+        type="text"
+        id="problem"
+        name="problem"
+        placeholder="Enter problem..."
+      />
+      <br /><br />
+      <input type="submit" value="Search" />
+    </form>
+    <h2>Problem:{{ problem }} Urgent: {{ urgent }}</h2>
     <div class="container">
       <div class="row">
         {% for car in car_list %}
@@ -100,7 +113,7 @@
               />
             </a>
             <div class="card-body">
-              <p class="card-text">Buy 50 mobiles and get a gift card</p>
+              <p class="card-text">{{ car.problems }}</p>
             </div>
           </div>
         </div>

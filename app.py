@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -52,7 +52,7 @@ def cars_list():
     else:
         new_cars = filtered_cars
 
-    return render_template("car_list.html", car_list=new_cars)
+    return render_template("car_list.html", car_list=new_cars, problem=problem_filter, urgent=urgent)
 
     
 
@@ -76,10 +76,22 @@ def single_car(id):
     return render_template("single_car.html", car=None)
 
 
-@app.route("/add_car/")
+
+@app.route("/add_car", methods=["GET", "POST"])
 def add_car():
-    print("****** Adding car")
+    if request.method == "POST":
+        new_car = {
+            "id": request.form.get("id"),
+            "number": request.form.get("number"),
+            "urgent": request.form.get("urgent").lower() == "true",  # Convert to boolean
+            "image": request.form.get("image"),
+            "problems": [prob.strip() for prob in request.form.get("problems", "").split(",") if prob.strip()]
+        }
+        cars.append(new_car)
+        # return redirect('/')  # simple version of redirect
+        return redirect(url_for('cars_list'))  # Redirect to cars_list route or any other page
     return render_template("add_car.html")
+
 
 
 @app.route("/add_to_list/", methods=["POST", "GET"])
