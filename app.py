@@ -5,14 +5,14 @@ app = Flask(__name__)
 car1 = {
     "id": "1",
     "number": "123-456",
-    "problems": [],
+    "problems": ["engine", "breaks"],
     "urgent": True,
     "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=600",
 }
 car2 = {
     "id": "2",
     "number": "456-789",
-    "problems": [],
+    "problems": ["engine", "breaks"],
     "urgent": True,
     "image": "https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=600",
 }
@@ -20,37 +20,52 @@ car3 = {
     "id": "3",
     "number": "333-333",
     "urgent": False,
-    "problems": [],
+    "problems": ["gear", "breaks"],
     "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80",
 }
 car4 = {
     "id": "4",
     "number": "444-444",
     "urgent": False,
-    "problems": [],
+    "problems": ["gear", "engine"],
     "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/156405/xuv-3xo-exterior-right-front-three-quarter-33.jpeg?isig=0&q=80",
 }
 cars = [car1, car2, car3, car4]
 
 
-
-
-@app.route("/") # default request is always GET
+@app.route("/")
 def cars_list():
-    urgent = request.args.get('urgent')
-    print("***** urgent", urgent)
-    if urgent == 'true':
-        filtered_cars = [car for car in cars if car.get('urgent')]
+    # handling problem filter
+    problem_filter = request.args.get('problem','').lower()
+    if problem_filter:
+        filtered_cars = []
+        for car in cars:
+            if problem_filter in car.get('problems',[]):
+                filtered_cars.append(car)
+    else:
+        filtered_cars = cars  # Return all cars if no problem filter is requested
+
+    # handling urgent after problem filter
+    urgent = request.args.get('urgent','')
+    if urgent == "true":
+        new_cars = [car for car in filtered_cars if car.get('urgent')]
+    else:
+        new_cars = filtered_cars
+
+    return render_template("car_list.html", car_list=new_cars)
+
+    
+
+    # speific problem filter
+    # if problem_filter == "engine":
+    #     filtered_cars = [car for car in cars if "engine" in car.get('problems')]
+
         # list comprehension is equivalent to the following code
         # new_cars = []
         # for car in cars:
         #     if car.get('urgent'):
         #         new_cars.append(car)
         
-    else:
-        filtered_cars = cars  # Return all cars if no urgent is requested
-    
-    return render_template("car_list.html", car_list=filtered_cars)
 
 
 @app.route("/single_car/<id>")
