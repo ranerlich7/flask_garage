@@ -70,6 +70,19 @@
             <li><a href="/?problem=gear">Gear issue</a></li>
             <li><a href="/add_car">Add car</a></li>
           </ul>
+          <ul>
+            <li>
+              <form action="/">
+                <input
+                  type="text"
+                  id="search"
+                  name="search"
+                  placeholder="Enter search..."
+                />
+                <input type="submit" value="Search" />
+              </form>
+            </li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="#"
@@ -85,19 +98,8 @@
         </div>
       </div>
     </nav>
-    <h2>Search for Cars by Problem</h2>
-    <form action="/" method="GET">
-      <label for="problem">Enter a problem:</label><br />
-      <input
-        type="text"
-        id="problem"
-        name="problem"
-        placeholder="Enter problem..."
-      />
-      <br /><br />
-      <input type="submit" value="Search" />
-    </form>
-    <h2>Problem:{{ problem }} Urgent: {{ urgent }}</h2>
+
+    <h2>Search:{{ search }} Urgent: {{ urgent }}</h2>
     <div class="container">
       <div class="row">
         {% for car in car_list %}
