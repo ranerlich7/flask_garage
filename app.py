@@ -103,6 +103,7 @@ def add_car():
 
 @app.route("/login/", methods=["POST", "GET"])
 def login():
+    message = ""
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
