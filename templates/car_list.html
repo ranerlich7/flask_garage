@@ -65,7 +65,9 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">All Cars</a></li>
-            <li><a href="/?urgent=true">Urgent Cars</a></li>
+            <li>
+              <a href="/?urgent=true">Urgent Cars</a>
+            </li>
             <li><a href="/?problem=engine">Engine issue</a></li>
             <li><a href="/?problem=gear">Gear issue</a></li>
             <li><a href="/add_car">Add car</a></li>
@@ -117,6 +119,7 @@
             <div class="card-body">
               <p class="card-text">{{ car.problems }}</p>
             </div>
+            <a class="btn btn-danger" href="/delete/{{ car.id }}">Delete</a>
           </div>
         </div>
         {% endfor %}

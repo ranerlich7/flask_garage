@@ -119,5 +119,15 @@ def login():
     return render_template("login.html", message=message)
 
 
+@app.route("/delete/<id>/")
+def delete(id):
+    for car in cars:
+        if car.get("id") == id:
+            cars.remove(car)
+            return redirect(url_for("cars_list"))
+
+    return "ERROR deleting " + id
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=9000)
