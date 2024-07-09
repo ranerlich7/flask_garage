@@ -1,15 +1,73 @@
 <!DOCTYPE html>
-<html>
-  <head> </head>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      /* Remove the navbar's default rounded borders and increase the bottom margin */
+      .navbar {
+        margin-bottom: 50px;
+        border-radius: 0;
+      }
+
+      /* Remove the jumbotron's default bottom margin */
+      .jumbotron {
+        margin-bottom: 0;
+      }
+
+      /* Add a gray background color and some padding to the footer */
+      footer {
+        background-color: #f2f2f2;
+        padding: 25px;
+      }
+      .panel-body img {
+        width: 100%; /* Fill entire width of panel body */
+        height: auto; /* Maintain aspect ratio */
+      }
+      .jumbotron-sm {
+        padding: 2rem 1rem; /* Example padding adjustment */
+      }
+
+      .jumbotron-sm h1 {
+        font-size: 2.5rem; /* Example font size adjustment */
+      }
+    </style>
+  </head>
   <body>
+    <div class="jumbotron jumbotron-sm">
+      <div class="container text-center">
+        <h1 class="h2">My Garage</h1>
+      </div>
+    </div>
     {% include "nav_bar.html" %}
 
-    <h2>this is the {% block title %} header {% endblock %}</h2>
-    <div id="content">
-      {% block content %} this is my defualt content {% endblock %}
-    </div>
-    <div id="footer">
-      <h3>this is the footer</h3>
-    </div>
+    <h2>{% block title %}{% endblock %}</h2>
+    {% block content %} this is the base.... your shouldnt see this {% endblock
+    %}
+
+    <br />
+
+    <br /><br />
+
+    <footer class="container-fluid text-center">
+      <p>Online Store Copyright</p>
+      <form class="form-inline">
+        Get deals:
+        <input
+          type="email"
+          class="form-control"
+          size="50"
+          placeholder="Email Address"
+        />
+        <button type="button" class="btn btn-danger">Sign Up</button>
+      </form>
+    </footer>
   </body>
 </html>
