@@ -36,6 +36,7 @@ cars = [car1, car2, car3, car4]
 
 @app.route("/")
 def cars_list():
+    return render_template("car_list2.html")
     # handling problem filter
     search_filter = request.args.get("search", "").lower()
     if search_filter:
@@ -80,6 +81,8 @@ def single_car(id):
 
 @app.route("/add_car", methods=["GET", "POST"])
 def add_car():
+    return render_template("add_car2.html")
+
     if request.method == "POST":
         new_car = {
             "id": request.form.get("id"),

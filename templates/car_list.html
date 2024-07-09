@@ -81,7 +81,7 @@
                   name="search"
                   placeholder="Enter search..."
                 />
-                <input type="submit" value="Search" />
+                <input type="submit" value="Search" class="btn btn-info" />
               </form>
             </li>
           </ul>
@@ -102,6 +102,7 @@
     </nav>
 
     <h2>Search:{{ search }} Urgent: {{ urgent }}</h2>
+    {% block content %}
     <div class="container">
       <div class="row">
         {% for car in car_list %}
@@ -125,6 +126,7 @@
         {% endfor %}
       </div>
     </div>
+    {% endblock %}
 
     <br />
 
