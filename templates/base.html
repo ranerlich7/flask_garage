@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    {% include "nav_bar.html" %}
+
+    <h2>this is the {% block title %} header {% endblock %}</h2>
+    <div id="content">
+      {% block content %} this is my defualt content {% endblock %}
+    </div>
+    <div id="footer">
+      <h3>this is the footer</h3>
+    </div>
+  </body>
+</html>
