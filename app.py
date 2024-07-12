@@ -1,38 +1,11 @@
+from datetime import timedelta
 from flask import Flask, flash, render_template, request, redirect, session, url_for
+from data import cars, users
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key_236egsdbzdbsdghs"
-
-users = [{"name": "ran", "password": "123"}]
-car1 = {
-    "id": "1",
-    "number": "123-456",
-    "problems": ["engine", "breaks"],
-    "urgent": True,
-    "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=600",
-}
-car2 = {
-    "id": "2",
-    "number": "456-789",
-    "problems": ["engine", "breaks"],
-    "urgent": True,
-    "image": "https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=600",
-}
-car3 = {
-    "id": "3",
-    "number": "333-333",
-    "urgent": False,
-    "problems": ["gear", "breaks"],
-    "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80",
-}
-car4 = {
-    "id": "4",
-    "number": "444-444",
-    "urgent": False,
-    "problems": ["gear", "engine"],
-    "image": "https://imgd.aeplcdn.com/370x208/n/cw/ec/156405/xuv-3xo-exterior-right-front-three-quarter-33.jpeg?isig=0&q=80",
-}
-cars = [car1, car2, car3, car4]
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=365)
+app.config["SESSION_PERMANENT"] = True
 
 
 @app.route("/")
@@ -84,6 +57,9 @@ def single_car(id):
 
 @app.route("/add_car", methods=["GET", "POST"])
 def add_car():
+    if not session.get("logged_in"):
+        flash("please login", "danger")
+        return redirect(url_for("login"))
 
     if request.method == "POST":
         new_car = {
@@ -107,6 +83,13 @@ def add_car():
     return render_template("add_car.html")
 
 
+@app.route("/logout/")
+def logout():
+    session.clear()
+    flash("Goodbye. please login again soon")
+    return redirect(url_for("login"))
+
+
 @app.route("/login/", methods=["POST", "GET"])
 def login():
     message = ""
@@ -116,7 +99,9 @@ def login():
         for user in users:
             if user.get("name") == username and user.get("password") == password:
                 flash("Login successful!", "success")
+                session.permanent = True
                 session["logged_in"] = True
+                session["username"] = username
                 return redirect("/")
         flash("Error in user or password", "danger")
 

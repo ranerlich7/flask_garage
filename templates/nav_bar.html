@@ -32,20 +32,23 @@
               name="search"
               placeholder="Enter search..."
             />
-            aaaaaaaaaaaaaaaaaa
             <input type="submit" value="Search" class="btn btn-primary" />
           </form>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        {% if session.get("username") %}
+        <li class="text-primary">Hello {{ session.get("username") }}</li>
+        <a href="/logout">Logout</a>
+        {% else %}
         <li>
           <a href="/login/"
             ><span class="glyphicon glyphicon-user"></span> Login</a
           >
         </li>
+        {% endif %}
         <li>
-          <a href="#"
-            ><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a
+          <a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a
           >
         </li>
       </ul>
