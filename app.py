@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, session, url_for
 
 app = Flask(__name__)
+app.secret_key = "your_secret_key_236egsdbzdbsdghs"
 
 users = [{"name": "ran", "password": "123"}]
 car1 = {
@@ -36,6 +37,9 @@ cars = [car1, car2, car3, car4]
 
 @app.route("/")
 def cars_list():
+    if not session.get("logged_in"):
+        flash("please login", "danger")
+        return redirect(url_for("login"))
     # handling problem filter
     search_filter = request.args.get("search", "").lower()
     if search_filter:
@@ -95,6 +99,7 @@ def add_car():
             ],
         }
         cars.append(new_car)
+        flash(f'Added car {new_car.get("number")}', "success")
         # return redirect('/')  # simple version of redirect
         return redirect(
             url_for("cars_list")
@@ -110,14 +115,12 @@ def login():
         password = request.form.get("password")
         for user in users:
             if user.get("name") == username and user.get("password") == password:
-                print("logged in!")
+                flash("Login successful!", "success")
+                session["logged_in"] = True
                 return redirect("/")
-        message = "Problem in username or password"
-        print("POST!!!!!!!!!! got:", username, password)
-    else:
-        print("GET!!!!!!!!")
+        flash("Error in user or password", "danger")
 
-    return render_template("login.html", message=message)
+    return render_template("login.html")
 
 
 @app.route("/delete/<id>/")
